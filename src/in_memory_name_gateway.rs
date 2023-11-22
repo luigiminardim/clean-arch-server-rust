@@ -1,4 +1,6 @@
-use crate::greet_usecase::NameGateway;
+pub trait NameGateway {
+    fn get_name(&self) -> String;
+}
 
 pub struct InMememoryNameGateway {}
 
