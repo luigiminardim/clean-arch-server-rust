@@ -2,18 +2,17 @@ pub trait GreetUsecase {
     fn exec(&self) -> String;
 }
 
-pub struct GreetUsecaseImpl {
-    name: String,
+pub trait NameGateway {
+    fn get_name(&self) -> String;
 }
 
-impl GreetUsecaseImpl {
-    pub fn new(name: String) -> Self {
-        Self { name }
-    }
+pub struct GreetUsecaseImpl {
+    name_gateway: Box<dyn NameGateway>, // HERE YOU CAN CHANGE THE WRAPPER (Box, Rc, Arc, none, etc)
 }
 
 impl GreetUsecase for GreetUsecaseImpl {
     fn exec(&self) -> String {
-        format!("Hello, {}!", self.name)
+        let name = self.name_gateway.get_name();
+        format!("Hello, {}!", name)
     }
 }
